@@ -92,6 +92,27 @@ installing, do at least the following:
   shortest period your reporting actually needs, so raw page views are deleted
   sooner.
 
+## What has been reviewed
+
+A review of the shipped code and of a running installation covered the
+following. Every item is a property of the code, so it can be checked again:
+
+* **SQL.** Prepared statements everywhere, no user data concatenated into a
+  query.
+* **CSRF.** A token on every one of the state-changing POST routes.
+* **Sessions.** `HttpOnly`, `SameSite=Lax`, `Secure` when the request is HTTPS,
+  and a regenerated id after sign-in.
+* **Authorisation.** Every site-scoped request resolves the site through the
+  session owner, so another account's site id answers 403.
+* **Redirects.** `safeNext()` rejects targets outside the installation.
+* **Cron.** The scheduler compares the shared secret with `hash_equals()`.
+* **Static files.** The bundled `.htaccess` was checked against a live shared
+  host: configuration, logs, templates, locales and migrations answer 403 and
+  directory listing is off.
+
+This is a review by the maintainer, not an independent audit, and it is not a
+guarantee. See Maturity below.
+
 ## Maturity
 
 This project is young and has **not** received an independent security audit.
