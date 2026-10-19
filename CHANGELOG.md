@@ -5,6 +5,28 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.1] - 2026-10-19
+
+### Fixed
+
+* **Checkboxes in the user and site modals could not be turned on.** Ticking
+  "active", a site, "respect DNT", "track query parameters" or "exclude bots"
+  had no effect: the box looked ticked and was saved as off.
+
+  Alpine starts a bound checkbox by writing the model into the element. When the
+  model is `undefined` — the form began life as an empty object — and the
+  expression is dotted, Alpine substitutes an empty string and binds that to
+  `value`. The checkbox then carries `value=""`, so a ticked box posts an empty
+  string, and `post_bool()` reads an empty string as `false`.
+
+  Both modals now start from the same blank form their "add" button uses, so the
+  model is defined before Alpine runs. The two copies of that shape are also gone:
+  it is declared once, which stops them drifting apart.
+
+  What this restores: new users are created active and keep their site access;
+  editing a site no longer saves it as inactive, and its three tracking switches
+  can be changed again.
+
 ## [1.1.0] - 2026-10-19
 
 This release adds the three things the dashboard was missing: a way to look
