@@ -719,6 +719,14 @@ foreach (['/assets/tracker.js', '/assets/css/app.css', '/assets/js/app.js', '/as
 }
 $tracker = (string) @file_get_contents(ROOT . '/assets/tracker.js');
 Result::ok(strlen($tracker) < 2048, 'tracker.js is under 2 KB', strlen($tracker) . ' bytes');
+// Alpine blanks the value of a checkbox when its model is undefined at startup:
+// the expression is dotted (form.is_active), so Alpine turns undefined into ""
+// and binds that to value. A checkbox with value="" posts an empty string, which
+// post_bool() reads as false — the box looks ticked and is saved as off.
+// Verified in a DOM; this guard keeps the initialisation honest.
+$appJs = (string) @file_get_contents(ROOT . '/assets/js/app.js');
+Result::ok(strpos($appJs, 'form: {},') === false, 'no component starts with an empty form object');
+Result::ok(substr_count($appJs, 'form: blankForm(),') === 2, 'both modals start from the blank form, so their checkboxes keep value="1"');
 
 /* ------------------------------------------------------------------- report */
 

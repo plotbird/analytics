@@ -1017,30 +1017,34 @@
     /* ------------------------------------------------------ site management */
 
     window.pbSites = function (sites, clients) {
+        // Same reason as pbUsers: the four checkboxes in this form lose their
+        // value when the model starts undefined.
+        var blankForm = function () {
+            return {
+                id: 0,
+                name: '',
+                domain: '',
+                timezone: 'UTC',
+                is_active: true,
+                exclude_paths: '',
+                exclude_ips: '',
+                allowed_hosts: '',
+                respect_dnt: false,
+                track_query: false,
+                exclude_bots: true,
+                users: []
+            };
+        };
+
         return {
             sites: sites || [],
             clients: clients || [],
             modal: '',
             copied: '',
             deleteTarget: null,
-            form: {},
+            form: blankForm(),
 
-            blankForm: function () {
-                return {
-                    id: 0,
-                    name: '',
-                    domain: '',
-                    timezone: 'UTC',
-                    is_active: true,
-                    exclude_paths: '',
-                    exclude_ips: '',
-                    allowed_hosts: '',
-                    respect_dnt: false,
-                    track_query: false,
-                    exclude_bots: true,
-                    users: []
-                };
-            },
+            blankForm: blankForm,
 
             openCreate: function () {
                 this.form = this.blankForm();
@@ -1100,24 +1104,29 @@
     /* ------------------------------------------------------ user management */
 
     window.pbUsers = function (users, assignments) {
+        // Declared before Alpine starts. An undefined model makes Alpine blank the
+        // value of every checkbox it binds, and a checkbox with no value reaches the
+        // server as an empty string, which reads as "unchecked".
+        var blankForm = function () {
+            return {
+                id: 0,
+                email: '',
+                name: '',
+                role: 'client',
+                locale: 'en',
+                is_active: true,
+                sites: []
+            };
+        };
+
         return {
             users: users || [],
             assignments: assignments || {},
             modal: '',
-            form: {},
+            form: blankForm(),
             deleteTarget: null,
 
-            blankForm: function () {
-                return {
-                    id: 0,
-                    email: '',
-                    name: '',
-                    role: 'client',
-                    locale: 'en',
-                    is_active: true,
-                    sites: []
-                };
-            },
+            blankForm: blankForm,
 
             openCreate: function () {
                 this.form = this.blankForm();
