@@ -4,15 +4,20 @@
 the server, no SSH, no Composer — upload the folder to a classic shared hosting,
 install it in the browser, paste one `<script>` tag into your website.
 
+<p align="center">
+  <img src="assets/img/demo.gif" alt="PlotBird dashboard: switching the period, opening a goal and reading a visitor session" width="640">
+</p>
+
 [![Tests](https://github.com/plotbird/analytics/actions/workflows/tests.yml/badge.svg)](https://github.com/plotbird/analytics/actions/workflows/tests.yml)
 [![License: AGPL-3.0](https://img.shields.io/badge/license-AGPL--3.0-blue.svg)](LICENSE)
 [![PHP 8.0+](https://img.shields.io/badge/php-8.0%2B-777bb4.svg)](https://www.php.net)
 
 [Русская версия](README.ru.md)
 
-<p align="center">
-  <img src="assets/img/demo.gif" alt="PlotBird dashboard: switching the period, opening a goal and reading a visitor session" width="640">
-</p>
+> **On WordPress?** The
+> [PlotBird Analytics plugin](https://github.com/plotbird/wordpress-plugin) adds
+> the tracker and shows these statistics right inside the WordPress admin — a
+> four-step setup, no code to paste, English and Russian.
 
 ---
 
@@ -24,6 +29,28 @@ install it in the browser, paste one `<script>` tag into your website.
 
 Full details are in [Installation](#installation). Requirements are PHP 8.0+ and
 MySQL 5.7+ or MariaDB 10.3+, nothing else.
+
+## WordPress
+
+If the site runs on WordPress, the
+[PlotBird Analytics plugin](https://github.com/plotbird/wordpress-plugin) does
+the wiring: it adds the tracking code to public pages only, checks the
+connection, and shows the statistics inside the admin.
+
+![PlotBird statistics inside the WordPress admin](https://raw.githubusercontent.com/plotbird/wordpress-plugin/main/screenshot-1.png)
+
+* **Four steps, no code.** The address of your installation, the website id, a
+  read-only share link, and a check that visits actually arrive.
+* **Statistics in the admin.** Pageviews, visitors, sessions, average time and
+  bounce rate with sparklines, a traffic chart, top pages, sources, countries,
+  devices, browsers and goals.
+* **Administrators are not counted**, so your own visits do not land in the
+  reports.
+* **English and Russian**, following the site language.
+
+The plugin holds no credentials: reading needs a share link, which is read-only
+and revocable. PlotBird itself still lives in `data/` and the database on your
+hosting.
 
 ## Why PlotBird
 

@@ -5,15 +5,20 @@
 хостинг, установите её прямо в браузере и вставьте в свой сайт один тег
 `<script>`.
 
+<p align="center">
+  <img src="assets/img/demo.gif" alt="Дашборд PlotBird: переключение периода, открытие цели и разбор сессии посетителя" width="640">
+</p>
+
 [![Tests](https://github.com/plotbird/analytics/actions/workflows/tests.yml/badge.svg)](https://github.com/plotbird/analytics/actions/workflows/tests.yml)
 [![License: AGPL-3.0](https://img.shields.io/badge/license-AGPL--3.0-blue.svg)](LICENSE)
 [![PHP 8.0+](https://img.shields.io/badge/php-8.0%2B-777bb4.svg)](https://www.php.net)
 
 [Английская версия](README.md)
 
-<p align="center">
-  <img src="assets/img/demo.gif" alt="Дашборд PlotBird: переключение периода, открытие цели и разбор сессии посетителя" width="640">
-</p>
+> **Сайт на WordPress?** Плагин
+> [PlotBird Analytics](https://github.com/plotbird/wordpress-plugin) вставит
+> счётчик и покажет эту статистику прямо в админке WordPress — четыре шага
+> настройки, код вставлять не нужно, есть русский язык.
 
 ---
 
@@ -25,6 +30,28 @@
 
 Подробности — в разделе [Установка](#установка). Требования: PHP 8.0+ и MySQL
 5.7+ или MariaDB 10.3+, больше ничего.
+
+## WordPress
+
+Если сайт на WordPress, всю обвязку берёт на себя
+[плагин PlotBird Analytics](https://github.com/plotbird/wordpress-plugin): он
+добавляет счётчик только на публичные страницы, проверяет подключение и
+показывает статистику внутри админки.
+
+![Статистика PlotBird в админке WordPress](https://raw.githubusercontent.com/plotbird/wordpress-plugin/main/screenshot-1.png)
+
+* **Четыре шага без кода.** Адрес установки, идентификатор сайта, публичная
+  ссылка только для чтения — и проверка, что визиты действительно доходят.
+* **Статистика в админке.** Просмотры, посетители, сессии, среднее время и
+  отказы с мини-графиками, график трафика, популярные страницы, источники,
+  страны, устройства, браузеры и цели.
+* **Администраторы не считаются**, поэтому ваши собственные визиты не попадают
+  в отчёты.
+* **Английский и русский**, по языку сайта.
+
+Плагин не хранит учётных данных: для чтения нужна публичная ссылка, она только
+для чтения и её можно отозвать. Сам PlotBird по-прежнему живёт в `data/` и в
+базе на вашем хостинге.
 
 ## Почему PlotBird
 
