@@ -107,6 +107,18 @@ final class I18n
         return isset(self::available()[$locale]);
     }
 
+    /**
+     * Whether a string may be used as the name of a translation file.
+     *
+     * The value becomes part of a filesystem path, so it is restricted to the
+     * shape of a language tag: two letters, optionally a region. Nothing that
+     * can escape the directory survives this check.
+     */
+    private static function isSafeCode(string $locale): bool
+    {
+        return preg_match('/^[a-z]{2}(-[a-z]{2})?$/i', $locale) === 1;
+    }
+
     public static function directory(): string
     {
         return PB_ROOT . '/locales';
@@ -384,7 +396,11 @@ final class I18n
         if (isset(self::$catalogues[$locale])) {
             return self::$catalogues[$locale];
         }
-        $file = self::directory() . '/' . $locale . '.json';
+        $code = basename($locale);
+        if (!self::isSafeCode($code)) {
+            return self::$catalogues[$locale] = [];
+        }
+        $file = self::directory() . '/' . $code . '.json';
         if (!is_file($file)) {
             return self::$catalogues[$locale] = [];
         }
@@ -424,7 +440,11 @@ final class I18n
         if (isset(self::$countries[$locale])) {
             return self::$countries[$locale];
         }
-        $file = self::directory() . '/countries/' . $locale . '.json';
+        $code = basename($locale);
+        if (!self::isSafeCode($code)) {
+            return self::$countries[$locale] = [];
+        }
+        $file = self::directory() . '/countries/' . $code . '.json';
         if (!is_file($file)) {
             return self::$countries[$locale] = [];
         }
