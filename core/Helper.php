@@ -23,7 +23,7 @@ if (!defined('PB_ROOT')) {
  * Application version, shown in the footer and used for update checks.
  */
 if (!defined('PB_VERSION')) {
-    define('PB_VERSION', '1.0.2');
+    define('PB_VERSION', '1.1.0');
 }
 
 /**

@@ -5,6 +5,47 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-10-19
+
+This release adds the three things the dashboard was missing: a way to look
+inside a single value, a way to take the numbers with you, and marks that make
+the device lists readable at a glance.
+
+### Added
+
+* **Drill-down.** A row in the countries, devices, pages or sources list opens a
+  page for that value: its totals, and the pages, sources, countries, devices,
+  systems and browsers inside it. It reads the raw page views, because only a raw
+  row carries every dimension at once — the pre-aggregated tables cannot filter
+  across dimensions.
+* **CSV export.** One file per report, packed into a ZIP: summary, traffic,
+  pages, sources, countries, devices, systems, browsers and goals, plus a note
+  explaining how each number is defined. Hosts without the zip extension get an
+  archive written by the project itself, so the download is never a single file.
+* **Tabs inside widgets.** The map and the country list no longer share a block,
+  and devices, systems and browsers are one at a time.
+* **Brand marks.** Browsers and operating systems carry their own coloured logos
+  on a light plate; the three device types carry a monitor, a phone and a tablet.
+  Values with no available mark keep a letter monogram in the product's colour.
+  Sources and licences are in THIRD-PARTY-NOTICES.md.
+
+### Changed
+
+* The world map is sized by the width of its block instead of fixed pixel
+  heights, and it remeasures itself after a window resize or a tab switch.
+* The real-time widget says its window out loud, and the country and device
+  blocks show the period they cover, so a five-minute counter is no longer
+  compared with a thirty-day map.
+
+### Fixed
+
+* **The visitor log printed nothing.** The loop wrapped its rows in a bare
+  `<template>`, and Alpine clones that element instead of its content, so every
+  session was rendered into an inert fragment. Each iteration now emits a
+  `<tbody>` with the row and its expandable detail.
+* Drill-down and export are hidden on public share links, where they would lead
+  to a sign-in page.
+
 ## [1.0.2] - 2026-10-19
 
 ### Fixed

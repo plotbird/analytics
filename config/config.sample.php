@@ -44,7 +44,7 @@ return [
         'pretty_urls'   => true,
 
         // Cache buster appended to /assets URLs.
-        'asset_version' => '1.0.2',
+        'asset_version' => '1.1.0',
 
         // Public source repository, linked from the footer. Point it at your
         // own fork if you publish one.
