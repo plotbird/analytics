@@ -615,4 +615,172 @@ final class Stats
         [$year, $month, $day] = array_map('intval', explode('-', $date));
         return checkdate($month, $day, $year);
     }
+
+    /**
+     * Dimensions a drill-down may filter by, mapped to their raw column.
+     *
+     * Only these names ever reach SQL, so the column can be interpolated safely
+     * after a whitelist lookup.
+     *
+     * @return array<string,string>
+     */
+    public static function filterable(): array
+    {
+        return [
+            'path'     => 'path',
+            'referrer' => 'referrer_domain',
+            'country'  => 'country',
+            'device'   => 'device',
+            'os'       => 'os',
+            'browser'  => 'browser',
+            'title'    => 'title',
+            'language' => 'language',
+            'screen'   => 'screen',
+        ];
+    }
+
+    /**
+     * The column for a filterable dimension, or null when the name is unknown.
+     */
+    public static function filterColumn(string $dimension): ?string
+    {
+        $map = self::filterable();
+        return $map[$dimension] ?? null;
+    }
+
+    /**
+     * Totals for one filtered value.
+     *
+     * @return array{pageviews:int,visitors:int,sessions:int,bounces:int}
+     */
+    public static function filteredSummary(int $siteId, string $from, string $to, string $column, string $value): array
+    {
+        $db = Database::instance();
+
+        $row = $db->one(
+            'SELECT COUNT(*) AS pageviews,
+                    COUNT(DISTINCT `visitor_hash`) AS visitors,
+                    COUNT(DISTINCT `session_key`) AS sessions
+               FROM ' . $db->table('pageviews') . '
+              WHERE `site_id` = :sid
+                AND `created_date` >= :from AND `created_date` <= :to
+                AND `is_bot` = 0
+                AND `' . $column . '` = :value',
+            [':sid' => $siteId, ':from' => $from, ':to' => $to, ':value' => $value]
+        );
+
+        return [
+            'pageviews' => (int) ($row['pageviews'] ?? 0),
+            'visitors'  => (int) ($row['visitors'] ?? 0),
+            'sessions'  => (int) ($row['sessions'] ?? 0),
+            'bounces'   => 0,
+        ];
+    }
+
+    /**
+     * A daily series for one filtered value.
+     *
+     * @return array{labels:list<string>,pageviews:list<int>,visitors:list<int>,sessions:list<int>,granularity:string}
+     */
+    public static function filteredSeries(array $site, string $from, string $to, string $column, string $value): array
+    {
+        $db = Database::instance();
+
+        $rows = $db->all(
+            'SELECT `created_date` AS day,
+                    COUNT(*) AS pageviews,
+                    COUNT(DISTINCT `visitor_hash`) AS visitors,
+                    COUNT(DISTINCT `session_key`) AS sessions
+               FROM ' . $db->table('pageviews') . '
+              WHERE `site_id` = :sid
+                AND `created_date` >= :from AND `created_date` <= :to
+                AND `is_bot` = 0
+                AND `' . $column . '` = :value
+              GROUP BY `created_date`
+              ORDER BY `created_date` ASC',
+            [':sid' => (int) $site['id'], ':from' => $from, ':to' => $to, ':value' => $value]
+        );
+
+        $byDay = [];
+        foreach ($rows as $row) {
+            $byDay[(string) $row['day']] = [
+                'pageviews' => (int) $row['pageviews'],
+                'visitors'  => (int) $row['visitors'],
+                'sessions'  => (int) $row['sessions'],
+            ];
+        }
+
+        $labels = $pageviews = $visitors = $sessions = [];
+        $cursor = strtotime($from . ' 00:00:00 UTC');
+        $end    = strtotime($to . ' 00:00:00 UTC');
+
+        while ($cursor !== false && $cursor <= $end) {
+            $day = gmdate('Y-m-d', $cursor);
+            $labels[]    = $day;
+            $pageviews[] = $byDay[$day]['pageviews'] ?? 0;
+            $visitors[]  = $byDay[$day]['visitors'] ?? 0;
+            $sessions[]  = $byDay[$day]['sessions'] ?? 0;
+            $cursor = strtotime('+1 day', $cursor);
+        }
+
+        return [
+            'labels'      => $labels,
+            'pageviews'   => $pageviews,
+            'visitors'    => $visitors,
+            'sessions'    => $sessions,
+            'granularity' => 'day',
+        ];
+    }
+
+    /**
+     * A breakdown of one dimension inside a filtered value.
+     *
+     * @return list<array{value:string,pageviews:int,visitors:int,sessions:int}>
+     */
+    public static function filteredTop(
+        int $siteId,
+        string $from,
+        string $to,
+        string $filterColumn,
+        string $value,
+        string $dimension,
+        int $limit = 25
+    ): array {
+        $columns = self::filterable();
+        if (!isset($columns[$dimension])) {
+            return [];
+        }
+
+        $column = $columns[$dimension];
+        $limit  = max(1, min(100, $limit));
+        $db     = Database::instance();
+
+        $rows = $db->all(
+            'SELECT `' . $column . '` AS `value`,
+                    COUNT(*) AS pageviews,
+                    COUNT(DISTINCT `visitor_hash`) AS visitors,
+                    COUNT(DISTINCT `session_key`) AS sessions
+               FROM ' . $db->table('pageviews') . '
+              WHERE `site_id` = :sid
+                AND `created_date` >= :from AND `created_date` <= :to
+                AND `is_bot` = 0
+                AND `' . $filterColumn . '` = :value
+              GROUP BY `' . $column . '`
+              ORDER BY pageviews DESC
+              LIMIT ' . $limit,
+            [':sid' => $siteId, ':from' => $from, ':to' => $to, ':value' => $value]
+        );
+
+        $result = [];
+        foreach ($rows as $row) {
+            $result[] = [
+                'value'     => (string) $row['value'],
+                'pageviews' => (int) $row['pageviews'],
+                'visitors'  => (int) $row['visitors'],
+                'sessions'  => (int) $row['sessions'],
+            ];
+        }
+
+        return $result;
+    }
 }

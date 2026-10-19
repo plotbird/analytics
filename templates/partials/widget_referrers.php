@@ -36,8 +36,10 @@
                         <li class="grid grid-cols-[1fr_auto_auto] items-center gap-3">
                             <div class="min-w-0">
                                 <div class="flex items-center gap-2">
-                                    <span class="truncate text-sm text-slate-700 dark:text-slate-200"
-                                          x-text="row.value === '' ? '<?= e(__('dimension.direct')) ?>' : row.value"></span>
+                                    <a class="pb-row-link truncate px-1 text-sm text-slate-700 dark:text-slate-200"
+                                       <?= ($can_drill ?? false) ? ':href="detailUrl(\'referrer\', row.value)"' : '' ?>
+                                       :title="'<?= e(__('details.title')) ?>: ' + (row.value || '<?= e(__('dimension.direct')) ?>')"
+                                       x-text="row.value === '' ? '<?= e(__('dimension.direct')) ?>' : row.value"></a>
                                 </div>
                                 <div class="pb-bar-track mt-1.5">
                                     <div class="pb-bar" :style="'width:' + widthPct(row, payload.top.referrer)"></div>

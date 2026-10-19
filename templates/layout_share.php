@@ -107,6 +107,9 @@ $locales     = $locales ?? [];
 <?php if (in_array('chart', $page_assets, true)): ?>
     <script src="<?= e(asset('vendor/chart.umd.min.js')) ?>"></script>
 <?php endif; ?>
+<?php if (in_array('brands', $page_assets, true)): ?>
+    <script src="<?= e(asset('js/brands.js')) ?>"></script>
+<?php endif; ?>
 <?php if (in_array('map', $page_assets, true)): ?>
     <script src="<?= e(asset('vendor/jsvectormap.min.js')) ?>"></script>
     <script src="<?= e(asset('vendor/jsvectormap.world.js')) ?>"></script>

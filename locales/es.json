@@ -13,7 +13,9 @@
         "on": "Activado",
         "save": "Guardar",
         "settings": "Ajustes",
-        "yes": "Sí"
+        "yes": "Sí",
+        "export": "Exportar",
+        "download": "Descargar"
     },
     "nav": {
         "dashboard": "Panel",
@@ -42,7 +44,11 @@
         "visitors": "Visitantes",
         "visitors_now": "Visitantes ahora",
         "visitors_short": "visitantes",
-        "bounce": "Rebote"
+        "bounce": "Rebote",
+        "date": "Fecha",
+        "value": "Valor",
+        "conversions": "Conversiones",
+        "referrer": "Origen"
     },
     "dimension": {
         "direct": "Directo / ninguno",
@@ -111,7 +117,9 @@
         "geo": {
             "empty": "Todavía no hay países registrados. Importa la base de datos de IP en la página de ajustes para rellenar esta vista.",
             "hint": "Solo a nivel de país: no se guarda ninguna dirección IP.",
-            "title": "Países"
+            "title": "Países",
+            "tab_map": "Mapa",
+            "tab_list": "Países"
         },
         "overview": {
             "compare": "Comparado con",
@@ -121,7 +129,8 @@
             "active_pages": "Páginas activas",
             "empty": "Ahora mismo no hay nadie en el sitio.",
             "minutes": "min",
-            "title": "Tiempo real"
+            "title": "Tiempo real",
+            "hint": "Se cuentan los últimos 5 minutos, sea cual sea el periodo elegido."
         },
         "referrers": {
             "empty": "Todavía no hay fuentes de tráfico registradas.",
@@ -497,5 +506,16 @@
         "error_duplicate": "Ya existe un objetivo para ese valor.",
         "error_too_many": "Este sitio web ha alcanzado el número máximo de objetivos.",
         "error_not_found": "Objetivo no encontrado."
+    },
+    "details": {
+        "title": "Detalles",
+        "filtered_by": "Filtrado por",
+        "empty": "No se registró nada para este valor en el periodo elegido.",
+        "open_page": "Abrir la página",
+        "back_to_dashboard": "Volver al panel"
+    },
+    "export": {
+        "title": "Exportar estadísticas",
+        "hint": "Un CSV por informe, empaquetado en un archivo ZIP."
     }
 }

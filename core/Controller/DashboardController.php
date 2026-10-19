@@ -51,7 +51,7 @@ final class DashboardController extends BaseController
             'layout'      => Widgets::defaultLayout(),
             'presets'     => Stats::PRESETS,
             'site'        => $site,
-            'page_assets' => ['chart', 'map', 'sortable'],
+            'page_assets' => ['chart', 'map', 'sortable', 'brands'],
         ]);
     }
 }

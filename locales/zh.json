@@ -13,7 +13,9 @@
         "on": "开启",
         "save": "保存",
         "settings": "设置",
-        "yes": "是"
+        "yes": "是",
+        "export": "导出",
+        "download": "下载"
     },
     "nav": {
         "dashboard": "仪表盘",
@@ -42,7 +44,11 @@
         "visitors": "访客",
         "visitors_now": "当前访客",
         "visitors_short": "访客",
-        "bounce": "跳出"
+        "bounce": "跳出",
+        "date": "日期",
+        "value": "值",
+        "conversions": "转化",
+        "referrer": "来源"
     },
     "dimension": {
         "direct": "直接访问 / 无",
@@ -111,7 +117,9 @@
         "geo": {
             "empty": "暂无国家/地区记录。请在设置页面导入 IP 数据库以填充此项。",
             "hint": "仅统计到国家/地区，不存储任何 IP 地址。",
-            "title": "国家/地区"
+            "title": "国家/地区",
+            "tab_map": "地图",
+            "tab_list": "国家"
         },
         "overview": {
             "compare": "对比",
@@ -121,7 +129,8 @@
             "active_pages": "活跃页面",
             "empty": "当前没有人在访问网站。",
             "minutes": "分钟",
-            "title": "实时"
+            "title": "实时",
+            "hint": "统计最近 5 分钟的数据，与所选时间段无关。"
         },
         "referrers": {
             "empty": "暂无流量来源记录。",
@@ -497,5 +506,16 @@
         "error_duplicate": "该目标值的目标已存在。",
         "error_too_many": "该网站已达到目标数量上限。",
         "error_not_found": "目标未找到。"
+    },
+    "details": {
+        "title": "详情",
+        "filtered_by": "筛选条件",
+        "empty": "所选时间段内没有该值的记录。",
+        "open_page": "打开页面",
+        "back_to_dashboard": "返回面板"
+    },
+    "export": {
+        "title": "导出统计数据",
+        "hint": "每份报告一个 CSV，打包为 ZIP 文件。"
     }
 }

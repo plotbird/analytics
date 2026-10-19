@@ -16,6 +16,8 @@ require __DIR__ . '/core/bootstrap.php';
 use PlotBird\Config;
 use PlotBird\Controller\AuthController;
 use PlotBird\Controller\DashboardController;
+use PlotBird\Controller\DetailsController;
+use PlotBird\Controller\ExportController;
 use PlotBird\Controller\SettingsController;
 use PlotBird\Controller\ShareController;
 use PlotBird\Controller\SitesController;
@@ -52,6 +54,10 @@ $router = new Router();
 
 $router->get('', [new DashboardController(), 'index']);
 $router->get('dashboard', [new DashboardController(), 'index']);
+
+// One dimension value, opened from a dashboard list.
+$router->get('details', [new DetailsController(), 'show']);
+$router->get('export', [new ExportController(), 'download']);
 
 $router->get('login', [new AuthController(), 'showLogin']);
 $router->post('login', [new AuthController(), 'login']);

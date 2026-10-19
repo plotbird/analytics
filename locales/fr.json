@@ -13,7 +13,9 @@
         "on": "Activé",
         "save": "Enregistrer",
         "settings": "Paramètres",
-        "yes": "Oui"
+        "yes": "Oui",
+        "export": "Exporter",
+        "download": "Télécharger"
     },
     "nav": {
         "dashboard": "Tableau de bord",
@@ -42,7 +44,11 @@
         "visitors": "Visiteurs",
         "visitors_now": "Visiteurs en direct",
         "visitors_short": "visiteurs",
-        "bounce": "Rebond"
+        "bounce": "Rebond",
+        "date": "Date",
+        "value": "Valeur",
+        "conversions": "Conversions",
+        "referrer": "Source"
     },
     "dimension": {
         "direct": "Direct / aucun",
@@ -111,7 +117,9 @@
         "geo": {
             "empty": "Aucun pays enregistré pour l'instant. Importez la base de données IP dans la page des paramètres pour remplir cette vue.",
             "hint": "Au niveau du pays uniquement - aucune adresse IP n'est stockée.",
-            "title": "Pays"
+            "title": "Pays",
+            "tab_map": "Carte",
+            "tab_list": "Pays"
         },
         "overview": {
             "compare": "Comparé à",
@@ -121,7 +129,8 @@
             "active_pages": "Pages actives",
             "empty": "Personne n'est sur le site en ce moment.",
             "minutes": "min",
-            "title": "Temps réel"
+            "title": "Temps réel",
+            "hint": "Comptés sur les 5 dernières minutes, quelle que soit la période choisie."
         },
         "referrers": {
             "empty": "Aucune source de trafic enregistrée pour l'instant.",
@@ -497,5 +506,16 @@
         "error_duplicate": "Un objectif existe déjà pour cette cible.",
         "error_too_many": "Ce site a atteint le nombre maximal d'objectifs.",
         "error_not_found": "Objectif introuvable."
+    },
+    "details": {
+        "title": "Détails",
+        "filtered_by": "Filtré par",
+        "empty": "Rien n'a été enregistré pour cette valeur sur la période.",
+        "open_page": "Ouvrir la page",
+        "back_to_dashboard": "Retour au tableau de bord"
+    },
+    "export": {
+        "title": "Exporter les statistiques",
+        "hint": "Un CSV par rapport, dans une archive ZIP."
     }
 }

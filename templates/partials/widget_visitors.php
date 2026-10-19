@@ -53,11 +53,10 @@
                     <th class="px-5 py-2.5"></th>
                 </tr>
             </thead>
-            <tbody>
-                <template x-for="row in payload.visits.rows" :key="row.id">
-                    <template>
-                        <tr class="pb-table-row cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700/40"
-                            @click="toggleVisit(row.id)">
+            <template x-for="row in payload.visits.rows" :key="row.id">
+                <tbody>
+                    <tr class="pb-table-row cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700/40"
+                        @click="toggleVisit(row.id)">
                             <td class="whitespace-nowrap px-5 py-2.5 tabular-nums text-slate-600 dark:text-slate-300"
                                 x-text="row.time"></td>
                             <td class="whitespace-nowrap px-5 py-2.5 text-slate-600 dark:text-slate-300">
@@ -122,9 +121,8 @@
                                 </p>
                             </td>
                         </tr>
-                    </template>
-                </template>
-            </tbody>
+                </tbody>
+            </template>
         </table>
     </div>
 

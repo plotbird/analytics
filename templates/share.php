@@ -15,7 +15,7 @@
 
 use PlotBird\View;
 
-$page_assets = ['chart', 'map'];
+$page_assets = ['chart', 'map', 'brands'];
 
 $options = [
     'widgets'    => array_keys($widgets),
@@ -26,6 +26,12 @@ $options = [
     ],
     'shareToken' => $token,
     'realtime'   => false,
+    // A public link shows numbers only: the drill-down and the export need a
+    // signed-in account, so the lists are plain text here.
+    'urls'       => [
+        'details' => '',
+        'export'  => '',
+    ],
 ];
 
 $presetLabels = [
@@ -75,10 +81,10 @@ $presetLabels = [
         <?php
         View::partial('partials/widget_overview');
         View::partial('partials/widget_chart');
-        View::partial('partials/widget_top_pages');
-        View::partial('partials/widget_referrers');
-        View::partial('partials/widget_geo');
-        View::partial('partials/widget_devices');
+        View::partial('partials/widget_top_pages', ['can_drill' => false]);
+        View::partial('partials/widget_referrers', ['can_drill' => false]);
+        View::partial('partials/widget_geo', ['can_drill' => false]);
+        View::partial('partials/widget_devices', ['can_drill' => false]);
         ?>
     </div>
 </div>

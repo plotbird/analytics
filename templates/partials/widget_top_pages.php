@@ -28,7 +28,8 @@
                 <li class="grid grid-cols-[1fr_auto_auto] items-center gap-3">
                     <div class="min-w-0">
                         <a class="block truncate text-sm text-slate-700 hover:text-sky-600 dark:text-slate-200 dark:hover:text-sky-400"
-                           :href="row.value" target="_blank" rel="noopener noreferrer nofollow"
+                           <?= ($can_drill ?? false) ? ':href="detailUrl(\'path\', row.value)"' : '' ?>
+                           :title="'<?= e(__('details.title')) ?>: ' + row.value"
                            x-text="row.value"></a>
                         <div class="pb-bar-track mt-1.5">
                             <div class="pb-bar" :style="'width:' + widthPct(row, payload.top.path)"></div>

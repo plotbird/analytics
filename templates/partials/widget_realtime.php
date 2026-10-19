@@ -9,7 +9,10 @@
          class="pb-widget pb-card col-span-12 overflow-hidden">
     <div class="pb-card-header">
         <div class="flex items-center gap-2.5">
-            <h2 class="pb-card-title"><?= e(__('widget.realtime.title')) ?></h2>
+            <div>
+                <h2 class="pb-card-title"><?= e(__('widget.realtime.title')) ?></h2>
+                <p class="text-xs text-slate-400"><?= e(__('widget.realtime.hint')) ?></p>
+            </div>
             <span class="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2 py-0.5 text-xs font-medium text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-300">
                 <span class="pb-pulse inline-block h-2 w-2 rounded-full bg-emerald-500 text-emerald-500"></span>
                 <span x-text="payload.realtime.window"></span>&nbsp;<?= e(__('widget.realtime.minutes')) ?>

@@ -65,6 +65,7 @@ final class ShareController extends BaseController
             'widgets'    => Widgets::CATALOG,
             'layout_def' => Widgets::defaultLayout(),
             'last_hit'   => Stats::lastHitAt((int) $site['id']),
+            'page_assets' => ['chart', 'map', 'brands'],
         ], 'layout_share');
     }
 }

@@ -199,6 +199,12 @@
                     }
                 }.bind(this));
 
+                // The map is sized from its container, so it has to be told when
+                // that container changes: after a window resize, and when the
+                // countries tab brings it back from display:none.
+                this.mapResizeTimer = null;
+                window.addEventListener('resize', this.scheduleMapResize.bind(this));
+                window.addEventListener('pb:map-resize', this.scheduleMapResize.bind(this));
                 if (!this.readonly && options.realtime !== false) {
                     this.realtimeTimer = setInterval(this.refreshRealtime.bind(this), 15000);
                 }
@@ -253,6 +259,100 @@
                     .then(function () { self.loading = false; });
             },
 
+            /**
+             * The URL of a coloured brand mark, or null when there is none.
+             */
+            brandIconUrl: function (value) {
+                var key     = String(value || '').toLowerCase();
+                var aliases = window.PB_BRAND_ALIASES || {};
+                var files   = window.PB_BRAND_FILES || {};
+                var slug    = files[aliases[key] || key];
+
+                if (!slug) {
+                    return null;
+                }
+
+                var base = (window.PB && PB.basePath) ? PB.basePath : '';
+
+                return base + '/assets/icons/brand/' + slug + '.svg';
+            },
+
+            /**
+             * Interface glyphs for the device list: a monitor, a phone and a tablet.
+             * They are not brands, so they follow the text colour.
+             *
+             * @return {string[]}
+             */
+            deviceGlyph: function (value) {
+                var glyphs = window.PB_DEVICE_GLYPHS || {};
+
+                return glyphs[String(value || '').toLowerCase()] || [];
+            },
+
+            /**
+             * The monogram fallback for a value with no mark at all.
+             */
+            monogram: function (value) {
+                var key = String(value || '').toLowerCase();
+                var map = {
+                    'windows phone': ['WP', '#0078d4'],
+                    'chrome os': ['OS', '#4285f4'],
+                    kaios: ['K', '#7c3aed'],
+                    freebsd: ['B', '#ab2b28'],
+                    edge: ['E', '#0078d4'],
+                    yandex: ['Y', '#fc3f1d'],
+                    'uc browser': ['UC', '#ff6a00'],
+                    duckduckgo: ['D', '#de5833'],
+                    'internet explorer': ['IE', '#0078d4'],
+                    curl: ['$', '#64748b'],
+                    wget: ['W', '#64748b']
+                };
+
+                var hit = map[key] || [(key.charAt(0) || '?').toUpperCase(), '#94a3b8'];
+
+                return { label: hit[0], color: hit[1] };
+            },
+            /**
+             * The drill-down URL for one value, carrying the current site and
+             * period so the page opens with the same frame of reference.
+             */
+            detailUrl: function (dimension, value) {
+                return this.stateUrl((options.urls && options.urls.details) || 'details', dimension, value);
+            },
+
+            /** The export URL for the current site and period. */
+            exportUrl: function () {
+                return this.stateUrl((options.urls && options.urls.export) || 'export', '', '');
+            },
+
+            /**
+             * Append the current state to a base URL.
+             */
+            stateUrl: function (base, dimension, value) {
+                // A share link has no drill-down page and no export.
+                if (!base) {
+                    return null;
+                }
+
+                var url = base;
+
+                var params = new URLSearchParams({
+                    site: this.siteId,
+                    preset: this.preset
+                });
+
+                if (this.preset === 'custom') {
+                    params.set('from', this.from);
+                    params.set('to', this.to);
+                }
+
+                if (dimension && value !== '') {
+                    params.set('dimension', dimension);
+                    params.set('value', value);
+                }
+
+                return url + (url.indexOf('?') === -1 ? '?' : '&') + params.toString();
+            },
             setPeriod: function (preset, from, to) {
                 this.preset = preset;
                 if (from) this.from = from;
@@ -618,6 +718,26 @@
 
             /* ----------------------------------------------------------- map */
 
+            /**
+             * Ask the map to remeasure itself, once the layout has settled.
+             */
+            scheduleMapResize: function () {
+                if (this.mapResizeTimer) {
+                    clearTimeout(this.mapResizeTimer);
+                }
+
+                this.mapResizeTimer = setTimeout(function () {
+                    if (!this.map || typeof this.map.updateSize !== 'function') {
+                        return;
+                    }
+
+                    try {
+                        this.map.updateSize();
+                    } catch (error) {
+                        /* the map was replaced while the timer was pending */
+                    }
+                }.bind(this), 150);
+            },
             renderMap: function () {
                 if (typeof window.jsVectorMap === 'undefined') return;
                 var container = document.getElementById('pb-world-map');

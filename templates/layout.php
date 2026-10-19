@@ -258,7 +258,9 @@ $currentPath = $current_path ?? '';
         serviceWorker: <?= json_encode(root_url('sw.js'), JSON_UNESCAPED_SLASHES) ?>,
         collect: <?= json_encode(root_url('api/collect.php'), JSON_UNESCAPED_SLASHES) ?>,
         geoip: <?= json_encode(root_url('index.php') . '?r=settings/geoip', JSON_UNESCAPED_SLASHES) ?>,
-        settingsSave: <?= json_encode(url('settings/save'), JSON_UNESCAPED_SLASHES) ?>
+        settingsSave: <?= json_encode(url('settings/save'), JSON_UNESCAPED_SLASHES) ?>,
+        details: <?= json_encode(url('details'), JSON_UNESCAPED_SLASHES) ?>,
+        export: <?= json_encode(url('export'), JSON_UNESCAPED_SLASHES) ?>
     });
     window.PB.decimalSeparator = <?= json_encode(\PlotBird\I18n::decimalSeparator()) ?>;
     window.PB.thousandsSeparator = <?= json_encode(\PlotBird\I18n::thousandsSeparator()) ?>;
@@ -271,6 +273,9 @@ $currentPath = $current_path ?? '';
 <?php if (in_array('map', $page_assets, true)): ?>
     <script src="<?= e(asset('vendor/jsvectormap.min.js')) ?>"></script>
     <script src="<?= e(asset('vendor/jsvectormap.world.js')) ?>"></script>
+<?php endif; ?>
+<?php if (in_array('brands', $page_assets, true)): ?>
+    <script src="<?= e(asset('js/brands.js')) ?>"></script>
 <?php endif; ?>
 <?php if (in_array('sortable', $page_assets, true)): ?>
     <script src="<?= e(asset('vendor/sortable.min.js')) ?>"></script>

@@ -13,7 +13,9 @@
         "on": "On",
         "save": "Save",
         "settings": "Settings",
-        "yes": "Yes"
+        "yes": "Yes",
+        "export": "Export",
+        "download": "Download"
     },
     "nav": {
         "dashboard": "Dashboard",
@@ -42,7 +44,11 @@
         "visitors": "Visitors",
         "visitors_now": "Visitors now",
         "visitors_short": "visitors",
-        "bounce": "Bounce"
+        "bounce": "Bounce",
+        "date": "Date",
+        "value": "Value",
+        "conversions": "Conversions",
+        "referrer": "Source"
     },
     "dimension": {
         "direct": "Direct / none",
@@ -111,7 +117,9 @@
         "geo": {
             "empty": "No countries recorded yet. Import the IP database on the settings page to fill this in.",
             "hint": "Country level only - no IP addresses are stored.",
-            "title": "Countries"
+            "title": "Countries",
+            "tab_map": "Map",
+            "tab_list": "Countries"
         },
         "overview": {
             "compare": "Compared with",
@@ -121,7 +129,8 @@
             "active_pages": "Active pages",
             "empty": "Nobody is on the site right now.",
             "minutes": "min",
-            "title": "Real-time"
+            "title": "Real-time",
+            "hint": "Counted over the last 5 minutes, whatever period is selected."
         },
         "referrers": {
             "empty": "No traffic sources recorded yet.",
@@ -497,5 +506,16 @@
         "error_duplicate": "A goal for that target already exists.",
         "error_too_many": "This website has reached the maximum number of goals.",
         "error_not_found": "Goal not found."
+    },
+    "details": {
+        "title": "Details",
+        "filtered_by": "Filtered by",
+        "empty": "Nothing was recorded for this value in the selected period.",
+        "open_page": "Open the page",
+        "back_to_dashboard": "Back to the dashboard"
+    },
+    "export": {
+        "title": "Export statistics",
+        "hint": "One CSV per report, packed into a ZIP archive."
     }
 }

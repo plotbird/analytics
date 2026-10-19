@@ -13,7 +13,9 @@
         "on": "Ein",
         "save": "Speichern",
         "settings": "Einstellungen",
-        "yes": "Ja"
+        "yes": "Ja",
+        "export": "Export",
+        "download": "Herunterladen"
     },
     "nav": {
         "dashboard": "Dashboard",
@@ -42,7 +44,11 @@
         "visitors": "Besucher",
         "visitors_now": "Besucher jetzt",
         "visitors_short": "Besucher",
-        "bounce": "Absprung"
+        "bounce": "Absprung",
+        "date": "Datum",
+        "value": "Wert",
+        "conversions": "Conversions",
+        "referrer": "Quelle"
     },
     "dimension": {
         "direct": "Direkt / keine",
@@ -111,7 +117,9 @@
         "geo": {
             "empty": "Noch keine Länder erfasst. Die IP-Datenbank auf der Einstellungsseite importieren, um diese Ansicht zu füllen.",
             "hint": "Nur auf Länderebene - es werden keine IP-Adressen gespeichert.",
-            "title": "Länder"
+            "title": "Länder",
+            "tab_map": "Karte",
+            "tab_list": "Länder"
         },
         "overview": {
             "compare": "Verglichen mit",
@@ -121,7 +129,8 @@
             "active_pages": "Aktive Seiten",
             "empty": "Gerade ist niemand auf der Website.",
             "minutes": "Min",
-            "title": "Echtzeit"
+            "title": "Echtzeit",
+            "hint": "Gezählt über die letzten 5 Minuten, unabhängig vom gewählten Zeitraum."
         },
         "referrers": {
             "empty": "Noch keine Traffic-Quellen erfasst.",
@@ -497,5 +506,16 @@
         "error_duplicate": "Für diesen Zielwert gibt es bereits ein Ziel.",
         "error_too_many": "Diese Website hat die maximale Anzahl an Zielen erreicht.",
         "error_not_found": "Ziel nicht gefunden."
+    },
+    "details": {
+        "title": "Details",
+        "filtered_by": "Gefiltert nach",
+        "empty": "Für diesen Wert wurde im gewählten Zeitraum nichts erfasst.",
+        "open_page": "Seite öffnen",
+        "back_to_dashboard": "Zurück zum Dashboard"
+    },
+    "export": {
+        "title": "Statistik exportieren",
+        "hint": "Eine CSV je Bericht, gepackt in ein ZIP-Archiv."
     }
 }

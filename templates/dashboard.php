@@ -15,7 +15,7 @@
 
 use PlotBird\View;
 
-$page_assets = ['chart', 'map', 'sortable'];
+$page_assets = ['chart', 'map', 'sortable', 'brands'];
 
 $options = [
     'widgets' => array_keys($widgets),
@@ -25,6 +25,10 @@ $options = [
         'new'       => __('metric.new'),
     ],
     'shareToken' => null,
+    'urls'    => [
+        'details' => url('details'),
+        'export'  => url('export'),
+    ],
     'realtime'   => true,
     'visitsLimit' => 50,
 ];
@@ -89,6 +93,13 @@ $presetLabels = [
                 </div>
             </div>
 
+            <a class="pb-btn-ghost !px-3" :href="exportUrl()" title="<?= e(__('export.hint')) ?>">
+                <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path d="M10 2a1 1 0 011 1v7.6l2.3-2.3a1 1 0 011.4 1.4l-4 4a1 1 0 01-1.4 0l-4-4a1 1 0 011.4-1.4L9 10.6V3a1 1 0 011-1zM4 15a1 1 0 100 2h12a1 1 0 100-2H4z"/>
+                </svg>
+                <span class="hidden sm:inline"><?= e(__('common.export')) ?></span>
+            </a>
+
             <button type="button" class="pb-btn-ghost !px-3" title="<?= e(__('dashboard.refresh')) ?>"
                     @click="reload()" :disabled="loading">
                 <svg class="h-4 w-4" :class="loading ? 'animate-spin' : ''" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -141,10 +152,10 @@ $presetLabels = [
         View::partial('partials/widget_realtime');
         View::partial('partials/widget_overview');
         View::partial('partials/widget_chart');
-        View::partial('partials/widget_top_pages');
-        View::partial('partials/widget_referrers');
-        View::partial('partials/widget_geo');
-        View::partial('partials/widget_devices');
+        View::partial('partials/widget_top_pages', ['can_drill' => true]);
+        View::partial('partials/widget_referrers', ['can_drill' => true]);
+        View::partial('partials/widget_geo', ['can_drill' => true]);
+        View::partial('partials/widget_devices', ['can_drill' => true]);
         View::partial('partials/widget_goals');
         View::partial('partials/widget_visitors');
         ?>
