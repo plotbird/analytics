@@ -115,6 +115,12 @@ jobs:
           set -o pipefail
           php tests/e2e.php 2>&1 | tee suite.log
 
+      # The suite installs the application in the document root. A second
+      # installation in a sub-directory is what broke every generated link once,
+      # so the URL helpers are checked against both layouts.
+      - name: Check URL generation in both layouts
+        run: php tests/urls.php
+
       # A failing assertion is put into the annotations, so the reason is
       # visible on the run page without opening a 5000-line log.
       - name: Report the failure
@@ -179,6 +185,12 @@ jobs:
         run: |
           set -o pipefail
           php tests/e2e.php 2>&1 | tee suite.log
+
+      # The suite installs the application in the document root. A second
+      # installation in a sub-directory is what broke every generated link once,
+      # so the URL helpers are checked against both layouts.
+      - name: Check URL generation in both layouts
+        run: php tests/urls.php
 
       # A failing assertion is put into the annotations, so the reason is
       # visible on the run page without opening a 5000-line log.

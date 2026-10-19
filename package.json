@@ -1,6 +1,6 @@
 {
     "name": "plotbird-analytics",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "private": true,
     "description": "Self-hosted, cookie-free web analytics in plain PHP",
     "license": "AGPL-3.0-or-later",

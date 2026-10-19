@@ -23,7 +23,7 @@ if (!defined('PB_ROOT')) {
  * Application version, shown in the footer and used for update checks.
  */
 if (!defined('PB_VERSION')) {
-    define('PB_VERSION', '1.0.1');
+    define('PB_VERSION', '1.0.2');
 }
 
 /**
@@ -104,7 +104,7 @@ function base_url(): string
  */
 function repository_url(): string
 {
-    return (string) config('app.repository', 'https://github.com/plotbird-analytics/plotbird');
+    return (string) config('app.repository', 'https://github.com/plotbird/analytics');
 }
 
 /**

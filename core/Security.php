@@ -309,7 +309,12 @@ final class Security
     }
 
     /**
-     * The absolute base URL of this installation, e.g. https://a.example.com/analytics
+     * The absolute origin of this installation, e.g. https://a.example.com
+     *
+     * Scheme and host only: the path a sub-directory installation lives under
+     * belongs to pb_base_path(). Returning it here as well is what used to
+     * produce /plotbird/plotbird/ in every generated link, because url() and
+     * root_url() append the base path themselves.
      */
     public static function detectedBaseUrl(): string
     {
@@ -318,10 +323,8 @@ final class Security
         if (preg_match('/^[A-Za-z0-9.\-]+(:\d{1,5})?$/', $host) !== 1) {
             $host = 'localhost';
         }
-        $scheme = is_https() ? 'https' : 'http';
-        $base   = (string) Config::get('app.base_path', self::detectBasePath());
 
-        return $scheme . '://' . $host . rtrim($base, '/');
+        return (is_https() ? 'https' : 'http') . '://' . $host;
     }
 
     /**

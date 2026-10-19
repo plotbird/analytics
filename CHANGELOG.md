@@ -5,6 +5,25 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.2] - 2026-10-19
+
+### Fixed
+
+* **Installations in a sub-directory produced doubled paths.** With the
+  application in `/plotbird/`, every generated link pointed at
+  `/plotbird/plotbird/...`: the installer redirect looped, stylesheets and
+  scripts returned 404, and the wizard was unusable. The base URL carried the
+  folder and the base path was appended to it again; the base URL now holds the
+  scheme and host only, and the folder comes from one place.
+* The default address of the project repository pointed at a location that no
+  longer exists.
+
+### Added
+
+* `tests/urls.php` checks generated links for both layouts - document root and
+  sub-directory - and runs in CI after the end-to-end suite, so a regression in
+  URL building fails the build instead of the installation.
+
 ## [1.0.1] - 2026-10-19
 
 Hardening found by a security review of the shipped code and of a live
