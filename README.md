@@ -37,7 +37,7 @@ If the site runs on WordPress, the
 the wiring: it adds the tracking code to public pages only, checks the
 connection, and shows the statistics inside the admin.
 
-![PlotBird statistics inside the WordPress admin](https://raw.githubusercontent.com/plotbird/wordpress-plugin/main/screenshot-1.png)
+![PlotBird statistics inside the WordPress admin](https://raw.githubusercontent.com/plotbird/wordpress-plugin/main/assets/screenshot-1.png)
 
 * **Four steps, no code.** The address of your installation, the website id, a
   read-only share link, and a check that visits actually arrive.
