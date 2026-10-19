@@ -1,0 +1,8 @@
+# Paths that are not part of the application a visitor runs: the test suite, the
+# developer tooling and the vendored libraries. Third-party code is tracked by
+# Dependabot and by its own maintainers, not by these queries.
+paths-ignore:
+  - tests
+  - .dev
+  - assets/vendor
+  - assets/css

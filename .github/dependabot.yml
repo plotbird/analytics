@@ -1,0 +1,24 @@
+version: 2
+
+updates:
+  # The workflows use actions published by GitHub and by the community; a
+  # compromised or outdated action runs with the repository's token.
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+      day: 'monday'
+    open-pull-requests-limit: 3
+    groups:
+      actions:
+        patterns:
+          - '*'
+
+  # Tailwind is the only dependency, and it only builds the CSS. An update that
+  # changes the output would be caught by the css job, which rebuilds and diffs.
+  - package-ecosystem: 'npm'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+      day: 'monday'
+    open-pull-requests-limit: 3
