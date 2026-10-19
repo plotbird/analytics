@@ -308,6 +308,18 @@ Result::ok(is_array($json) && ($json['status'] ?? '') === 'ignored' && ($json['r
 $response = $client->request('POST', '/api/collect.php?json=1', [], (string) json_encode(['w' => 'not-a-uuid', 'p' => '/']), ['Origin' => 'https://example.com']);
 Result::ok($response['status'] === 400, 'invalid website id is rejected', 'status=' . $response['status']);
 
+// The tracker accepts a small JSON body. Anything larger is refused before it is
+// parsed, so a hostile client cannot make the server buffer megabytes.
+$response = $client->request(
+    'POST',
+    '/api/collect.php?json=1',
+    [],
+    str_repeat('x', 5000),
+    ['Origin' => 'https://example.com'],
+    '203.0.113.7'
+);
+Result::ok($response['status'] === 413, 'an oversized tracker payload is refused', 'status=' . $response['status']);
+
 $pageviews = (int) $pdo->query('SELECT COUNT(*) FROM ' . DB_PREFIX . 'pageviews')->fetchColumn();
 $visits    = (int) $pdo->query('SELECT COUNT(*) FROM ' . DB_PREFIX . 'visits')->fetchColumn();
 $paths     = $pdo->query('SELECT id, path, country FROM ' . DB_PREFIX . 'pageviews ORDER BY id ASC')->fetchAll();
@@ -526,8 +538,12 @@ $pdo->exec('DELETE FROM ' . DB_PREFIX . 'share_links WHERE label IN ("no-expiry"
 $linkId = (int) $pdo->query('SELECT id FROM ' . DB_PREFIX . 'share_links ORDER BY id DESC LIMIT 1')->fetchColumn();
 $response = $client->request('POST', '/sites/share/revoke', ['_token' => $token, 'site_id' => (string) $siteId, 'link_id' => (string) $linkId]);
 Result::ok($response['status'] === 302, 'share link revoked');
+
+// Revocation has to take effect immediately: the token is still in the wild.
 $response = $public->request('GET', $sharePath);
 Result::contains($response['body'], 'Link not available', 'a revoked link stops working');
+$response = $public->request('GET', '/api/stats.php?share=' . basename($sharePath) . '&preset=last7');
+Result::ok($response['status'] === 403, 'a revoked token no longer authorises the API', 'status=' . $response['status']);
 
 // A revoked link can be deleted, otherwise the panel fills up with dead rows.
 $response = $client->request('GET', '/sites?site=' . $siteId);
@@ -584,6 +600,33 @@ Result::ok($response['status'] === 403, 'client cannot read a foreign website', 
 
 $response = $clientSession->request('GET', '/users');
 Result::ok($response['status'] === 403, 'client cannot open user management', 'status=' . $response['status']);
+
+// Read access is not the only thing worth refusing: a client must not be able to
+// mint a public link for a website it cannot see, because that link would leak
+// the statistics to anybody who receives it.
+$response = $clientSession->request('GET', '/sites?site=' . $siteId);
+$clientToken = csrf($response['body']);
+$before = (int) $pdo->query('SELECT COUNT(*) FROM ' . DB_PREFIX . 'share_links WHERE site_id = ' . $otherSite)->fetchColumn();
+
+$response = $clientSession->request('POST', '/sites/share', [
+    '_token'  => $clientToken,
+    'site_id' => (string) $otherSite,
+    'label'   => 'foreign-attempt',
+]);
+
+$after = (int) $pdo->query('SELECT COUNT(*) FROM ' . DB_PREFIX . 'share_links WHERE site_id = ' . $otherSite)->fetchColumn();
+Result::ok($after === $before, 'a client cannot create a share link for a foreign website', 'before=' . $before . ' after=' . $after);
+
+// The same attempt against goals: only an administrator configures them.
+$response = $clientSession->request('POST', '/sites/goals', [
+    '_token'      => $clientToken,
+    'site_id'     => (string) $siteId,
+    'name'        => 'client-goal',
+    'type'        => 'event',
+    'match_value' => 'signup',
+]);
+$clientGoals = (int) $pdo->query('SELECT COUNT(*) FROM ' . DB_PREFIX . 'goals WHERE name = "client-goal"')->fetchColumn();
+Result::ok($clientGoals === 0, 'a client cannot create a goal', 'goals=' . $clientGoals);
 
 echo "\n[18] Settings and maintenance\n";
 $response = $client->request('GET', '/settings');
