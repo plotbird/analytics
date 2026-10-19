@@ -144,10 +144,15 @@ server {
         try_files $uri $uri/ /index.php?$query_string;
     }
 
+    # Deny before anything static: some hosts serve .gz files directly and
+    # that would bypass the rules below.
     location ~ ^/(config|core|data|locales|templates|tests|migrations)/ {
         deny all;
         return 404;
     }
+
+    # The interpreter version is a free hint for exploit matching.
+    fastcgi_hide_header X-Powered-By;
 
     location ~ \.php$ {
         include fastcgi_params;

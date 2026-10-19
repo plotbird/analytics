@@ -333,6 +333,11 @@ final class Security
             return;
         }
 
+        // The interpreter advertises its exact version in a header unless told
+        // otherwise, and that is a free hint for anyone matching exploits to a
+        // version number.
+        header_remove('X-Powered-By');
+
         header('X-Content-Type-Options: nosniff');
         header('X-Frame-Options: SAMEORIGIN');
         header('Referrer-Policy: strict-origin-when-cross-origin');
