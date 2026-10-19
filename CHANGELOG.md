@@ -5,6 +5,32 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.1] - 2026-10-19
+
+Hardening found by a security review of the shipped code and of a live
+installation.
+
+### Fixed
+
+* Translation files were opened through a path built from the locale. Only the
+  locale setter could introduce a value, and it rejects anything unknown, so the
+  directory could not be escaped — but the guarantee lived one call away from the
+  filesystem code. The file name is now reduced with `basename()` and has to look
+  like a language tag before it is opened.
+* `X-Powered-By: PHP/8.2.34` was sent with every response, handing the exact
+  interpreter version to anyone who asked. Removed in PHP for everything the
+  application renders, in `.htaccess` for static files, and in the documented
+  nginx configuration.
+
+### Added
+
+* Four authorisation and input-limit checks in the end-to-end suite: a client
+  cannot create a share link for a website it cannot see, a client cannot create
+  a goal, a revoked token no longer authorises the API, and the tracker refuses a
+  body larger than it accepts.
+* Weekly Dependabot updates for the workflow actions and the single build
+  dependency.
+
 ## [1.0.0] - 2026-10-17
 
 First public release.
