@@ -1,0 +1,12 @@
+# Runtime data: logs, cache, rate limiter counters, the IP database.
+# None of it may be reachable over HTTP.
+<IfModule mod_authz_core.c>
+    Require all denied
+</IfModule>
+<IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+</IfModule>
+
+Options -Indexes
+php_flag engine off

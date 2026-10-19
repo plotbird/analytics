@@ -1,0 +1,14 @@
+{
+    "name": "plotbird-analytics",
+    "version": "1.0.0",
+    "private": true,
+    "description": "Self-hosted, cookie-free web analytics in plain PHP",
+    "license": "AGPL-3.0-or-later",
+    "scripts": {
+        "build:css": "tailwindcss -i ./assets/css/tailwind.src.css -o ./assets/css/tailwind.css --minify",
+        "watch:css": "tailwindcss -i ./assets/css/tailwind.src.css -o ./assets/css/tailwind.css --watch"
+    },
+    "devDependencies": {
+        "tailwindcss": "^3.4.17"
+    }
+}

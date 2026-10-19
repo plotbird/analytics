@@ -1,0 +1,49 @@
+name: Feature request
+description: Suggest a change or an addition to PlotBird.
+title: "[Feature] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        PlotBird deliberately stays small: no dependencies, no build step, no
+        CLI requirement. Proposals that keep it deployable on cheap shared
+        hosting have the best chance of being accepted.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What are you unable to do today? Describe the situation, not the solution.
+      placeholder: I run 40 client sites and cannot tell which of them stopped sending hits.
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution
+      description: What should PlotBird do? If it changes the UI, describe where it would live.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Other ways to solve the same problem, including doing nothing or solving it outside PlotBird.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: beneficiary
+    attributes:
+      label: Who benefits
+      description: Pick the closest match.
+      options:
+        - Self-hoster running one or a few websites
+        - Agency or freelancer managing websites for clients
+        - Client with a read-only account
+        - Everyone
+    validations:
+      required: true

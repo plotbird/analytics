@@ -1,0 +1,10 @@
+# The API endpoints are public entry points (collect.php is called from the
+# customer's website), so nothing is denied here - only listing.
+Options -Indexes
+
+<IfModule mod_headers.c>
+    # The collection endpoint is used cross-origin by tracker.js.
+    <Files "collect.php">
+        Header always set Access-Control-Allow-Origin "*"
+    </Files>
+</IfModule>

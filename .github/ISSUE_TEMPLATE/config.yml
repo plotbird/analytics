@@ -1,0 +1,13 @@
+blank_issues_enabled: false
+# GitHub's issue chooser does NOT resolve relative URLs in contact_links, so
+# these are absolute. If you publish this project under a different owner or
+# name, replace `plotbird/analytics` with your own `owner/repo` -
+# the same placeholder is used in README.md and in the `app.repository`
+# default in config/config.sample.php.
+contact_links:
+  - name: Report a security vulnerability
+    url: https://github.com/plotbird/analytics/security/advisories/new
+    about: Do not open a public issue for security problems. Use the private advisory channel described in SECURITY.md.
+  - name: Documentation and installation guide
+    url: https://github.com/plotbird/analytics/blob/main/README.md
+    about: Requirements, installation, tracking code, nginx configuration and privacy notes.

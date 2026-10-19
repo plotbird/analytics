@@ -1,0 +1,14 @@
+# The installer is reachable on purpose (that is how the application gets
+# installed), but it locks itself once an administrator exists. Delete this
+# whole folder when the installation is finished.
+Options -Indexes
+
+<FilesMatch "\.(?:sql|lock|dist)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>

@@ -1,0 +1,121 @@
+name: Bug report
+description: Something in PlotBird does not work as documented.
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a problem.
+
+        Before you continue: this template is for bugs only. If you found a
+        security issue, do **not** open an issue — use the private channel
+        described in [SECURITY.md](../blob/main/SECURITY.md) instead.
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: Describe the actual behaviour, including any error message you saw.
+      placeholder: The dashboard shows an empty countries map even though hits are arriving.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behaviour
+      description: What did you expect to happen instead?
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Numbered steps, starting from a known state. Say if it happens every time or only sometimes.
+      placeholder: |
+        1. Install PlotBird 1.0.0 on ...
+        2. Add a website and paste the tracker ...
+        3. Open the dashboard and ...
+    validations:
+      required: true
+
+  - type: input
+    id: plotbird-version
+    attributes:
+      label: PlotBird version
+      description: Shown in the footer of the dashboard, or in `core/Helper.php` (`PB_VERSION`).
+      placeholder: "1.0.0"
+    validations:
+      required: true
+
+  - type: input
+    id: php-version
+    attributes:
+      label: PHP version
+      description: The exact version, from the installer's requirements step or `php -v`.
+      placeholder: "8.2.18"
+    validations:
+      required: true
+
+  - type: input
+    id: database-version
+    attributes:
+      label: MySQL / MariaDB version
+      description: From phpMyAdmin, the installer, or `SELECT VERSION()`.
+      placeholder: MariaDB 10.6.16
+    validations:
+      required: true
+
+  - type: dropdown
+    id: web-server
+    attributes:
+      label: Web server
+      options:
+        - Apache
+        - nginx
+        - LiteSpeed / OpenLiteSpeed
+        - Other (explain in "What happened")
+    validations:
+      required: true
+
+  - type: dropdown
+    id: mod-rewrite
+    attributes:
+      label: Is URL rewriting available (mod_rewrite or equivalent)?
+      description: If not, PlotBird falls back to `index.php?r=...` URLs.
+      options:
+        - "Yes"
+        - "No"
+        - "Not sure"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: hosting
+    attributes:
+      label: Hosting type
+      options:
+        - Shared hosting
+        - VPS or dedicated server
+        - Local development environment
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant lines from data/logs/error-*.log
+      description: Paste the relevant lines. Remove database passwords, the cron secret and anything else you do not want public.
+      render: text
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: installer-removed
+    attributes:
+      label: Confirmation
+      options:
+        - label: I have deleted the `/install/` folder on this installation.
+          required: true

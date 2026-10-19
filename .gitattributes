@@ -1,0 +1,14 @@
+# Normalise line endings in the repository, whatever OS the contributor uses.
+* text=auto eol=lf
+
+# Binary assets: never diffed, never line-ending converted, never merged as text.
+*.woff2 binary
+*.gz binary
+*.png binary
+
+# Generated or third-party content. Excluded from the repository's language
+# statistics so those reflect the project's own PHP, JavaScript and CSS instead
+# of the vendored libraries, the country-name tables and the IP database.
+assets/vendor/**     linguist-vendored
+locales/countries/** linguist-vendored
+data/geoip/*.gz      linguist-vendored

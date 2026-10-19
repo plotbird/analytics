@@ -1,0 +1,42 @@
+# ---------------------------------------------------------------------------
+# Generated at installation time - never commit it: it contains the database
+# password and the salt used for visitor hashing.
+/config/config.php
+/config/install.lock
+
+# Runtime data (logs, cache, rate limit counters)
+/data/logs/*
+!/data/logs/.gitkeep
+/data/cache/*
+!/data/cache/.gitkeep
+/data/ratelimit/*
+!/data/ratelimit/.gitkeep
+/data/tmp/
+
+# The decompressed copy of the GeoIP CSV is derived at install time.
+# The bundled .csv.gz IS committed on purpose: it is what makes geolocation
+# work out of the box, without any download during installation.
+/data/geoip/*.csv
+/data/geoip/*.part
+
+# Local development environment
+/.dev/
+
+# Editor and OS noise
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
+*.swp
+
+# Node tooling (the Tailwind build is developer-only; the compiled CSS is committed)
+/node_modules/
+/.dev/npm-cache/
+/.dev/tw/
+
+# The original project brief (a working document, not part of the release)
+/ТЗ.md
+
+# Release archives built for upload (see .dev/build-release.php)
+/plotbird-*.zip

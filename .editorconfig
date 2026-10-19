@@ -1,0 +1,21 @@
+# EditorConfig - https://editorconfig.org
+# A single set of rules for every editor, so whitespace diffs stay out of pull
+# requests. The rules below mirror the project's coding standards.
+
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+
+[*.{php,js}]
+indent_size = 4
+
+[*.{json,yml,yaml,md}]
+indent_size = 2
+
+[*.{html,css}]
+indent_size = 2
